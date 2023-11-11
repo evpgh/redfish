@@ -1,9 +1,11 @@
-require 'redcarpet'
+# frozen_string_literal: true
+
+require "redcarpet"
 
 module Hyder
   class Render
     def markdown_renderer
-      @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+      @markdown_renderer ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
     end
 
     def markdown_to_html(markdown_content)
@@ -16,6 +18,11 @@ module Hyder
 
     def render_erb(template, binding)
       ERB.new(template).result(binding)
+    end
+
+    def render_component(component_class, *args)
+      component = component_class.new(self, *args)
+      component.render
     end
   end
 end

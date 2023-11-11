@@ -11,6 +11,9 @@ gem "minitest", "~> 5.0"
 
 gem "rubocop", "~> 1.21"
 
-gem 'redcarpet'
-gem 'erubi'
-gem 'zeitwerk'
+gem "erubi"
+gem "fileutils"
+gem "listen"
+gem "optparse"
+gem "redcarpet"
+gem "zeitwerk"

@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "optparse"
+require_relative "../lib/hyder"
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: hyder [options]"
+
+  opts.on("-b", "--build", "Build the site") do
+    options[:command] = :build
+  end
+
+  opts.on("-w", "--watch", "Watch for changes and rebuild the site") do
+    options[:command] = :watch
+  end
+
+  opts.on("-h", "--help", "Prints this help") do
+    puts opts
+    exit
+  end
+end.parse!
+
+case options[:command]
+when :build
+  Hyder.build
+when :watch
+  rebuild_method = -> { Hyder::PageBuilder.new.build_site }
+  Hyder.watch
+else
+  puts "Invalid command. Use --help for usage information."
+end

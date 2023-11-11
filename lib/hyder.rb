@@ -1,17 +1,23 @@
 # frozen_string_literal: true
 
-require_relative '../config/initializers/zeitwerk.rb'
+require_relative "../config/initializers/zeitwerk"
 require_relative "hyder/version"
 
 module Hyder
   class Error < StandardError; end
-  class TestClass
-    def self.say_hello
-      "Hello from TestClass"
-    end
+
+  def self.root
+    File.expand_path("..", __dir__)
   end
 
-  def self.test_autoload
-    TestClass.say_hello
+  def self.build
+    builder = PageBuilder.new
+    builder.build_site
+  end
+
+  def self.watch
+    builder = PageBuilder.new
+    watcher = FileWatcher.new(-> { builder.build_site })
+    watcher.start
   end
 end
