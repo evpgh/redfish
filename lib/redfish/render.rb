@@ -2,7 +2,7 @@
 
 require "redcarpet"
 
-module Hyder
+module Redfish
   class Render
     def markdown_renderer
       @markdown_renderer ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
@@ -21,6 +21,11 @@ module Hyder
     end
 
     def render_component(component_class, *args)
+      component = component_class.new(self, *args)
+      component.render
+    end
+
+    def component(component_class, *args)
       component = component_class.new(self, *args)
       component.render
     end

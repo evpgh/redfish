@@ -2,7 +2,7 @@
 
 require "listen"
 
-module Hyder
+module Redfish
   class FileWatcher
     def initialize(rebuild_method)
       @listener = Listen.to("src") do |_modified, _added, _removed|

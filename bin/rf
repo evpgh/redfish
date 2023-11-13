@@ -2,11 +2,15 @@
 # frozen_string_literal: true
 
 require "optparse"
-require_relative "../lib/hyder"
+require_relative "../lib/redfish"
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: hyder [options]"
+  opts.banner = "Usage: rf [options]"
+
+  opts.on("-n", "--new", "Create new site") do
+    options[:command] = :build
+  end
 
   opts.on("-b", "--build", "Build the site") do
     options[:command] = :build
@@ -23,11 +27,12 @@ OptionParser.new do |opts|
 end.parse!
 
 case options[:command]
+when :new
+  Redfish::NewProjectGenerator.new.generate
 when :build
-  Hyder.build
+  Redfish.build
 when :watch
-  rebuild_method = -> { Hyder::PageBuilder.new.build_site }
-  Hyder.watch
+  Redfish.watch { Redfish::PageBuilder.new.build_site }
 else
   puts "Invalid command. Use --help for usage information."
 end

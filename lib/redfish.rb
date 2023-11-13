@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require_relative "../config/initializers/zeitwerk"
-require_relative "hyder/version"
+require_relative "redfish/version"
 
-module Hyder
+module Redfish
   class Error < StandardError; end
 
   def self.root

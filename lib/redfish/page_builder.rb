@@ -3,7 +3,7 @@
 require "fileutils"
 require "erb"
 
-module Hyder
+module Redfish
   class PageBuilder
     def initialize(src_dir: "src", dest_dir: "dist")
       @src_dir = src_dir

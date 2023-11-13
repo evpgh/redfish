@@ -1,10 +1,9 @@
-# scripts/generate_component.rb
 def generate_component(name)
   class_name = name.split('_').map(&:capitalize).join
-  file_path = "lib/hyder/components/#{name}_component.rb"
+  file_path = "lib/redfish/components/#{name}_component.rb"
 
   File.open(file_path, 'w') do |file|
-    file.puts "class Hyder::#{class_name}Component < Hyder::Component"
+    file.puts "class Redfish::#{class_name}Component < Redfish::Component"
     file.puts "  def initialize(context, *args)"
     file.puts "    super(context, *args)"
     file.puts "  end"

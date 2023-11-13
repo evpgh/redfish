@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/hyder/version"
+require_relative "lib/redfish/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "hyder"
-  spec.version = Hyder::VERSION
+  spec.name = "redfish"
+  spec.version = Redfish::VERSION
   spec.authors = ["Evgeni Pavlov"]
   spec.email = ["evgeni.pavlov@toptal.com"]
 

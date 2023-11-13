@@ -2,15 +2,15 @@
 
 require "minitest/autorun"
 require "fileutils"
-require_relative "../../lib/hyder/page_builder"
+require_relative "../../lib/redfish/page_builder"
 require_relative "../test_helper"
 
-module Hyder
+module Redfish
   class TestPageBuilder < Minitest::Test
     def setup
       @src_dir = "test_src"
       @dest_dir = "test_dest"
-      @page_builder = Hyder::PageBuilder.new(src_dir: @src_dir, dest_dir: @dest_dir)
+      @page_builder = Redfish::PageBuilder.new(src_dir: @src_dir, dest_dir: @dest_dir)
 
       # Create test directories and files
       FileUtils.mkdir_p(@src_dir)

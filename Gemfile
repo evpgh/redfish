@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in hyder.gemspec
+# Specify your gem's dependencies in redfish.gemspec
 gemspec
 
 gem "rake", "~> 13.0"
