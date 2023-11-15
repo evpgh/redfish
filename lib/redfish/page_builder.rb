@@ -8,13 +8,12 @@ module Redfish
     def initialize(src_dir: "src", dest_dir: "dist")
       @src_dir = src_dir
       @dest_dir = dest_dir
-      @renderer = Render.new
     end
 
     def build_site
       Dir.glob(File.join(@src_dir, "**", "*")).each do |file|
         next if File.directory?(file)
-        next unless file.end_with?(".md", ".erb")
+        next unless file.end_with?(".md", ".erb", ".html")
 
         content = process_file(file)
         write_output(file, content)
@@ -24,22 +23,26 @@ module Redfish
     private
 
     def process_file(file)
+      input = File.read(file)
       print "."
       case File.extname(file)
       when ".md"
-        markdown_to_html(file)
+        markdown_to_html(input)
       when ".erb"
-        erb_to_html(file)
+        erb_to_html(input)
+      when ".html"
+        input
       end
     end
 
     def markdown_to_html(file)
-      @renderer.markdown_to_html_file(file)
+      @markdown_renderer ||= Renderers::Markdown.new
+      @markdown_renderer.render(file)
     end
 
     def erb_to_html(file)
-      input = File.read(file)
-      @renderer.render_erb(input)
+      @erb_renderer ||= Renderers::Erb.new
+      @erb_renderer.render(file)
     end
 
     def write_output(file, content)

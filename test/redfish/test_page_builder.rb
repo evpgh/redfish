@@ -48,12 +48,12 @@ module Redfish
     end
 
     def test_markdown_to_html
-      content = @page_builder.send(:markdown_to_html, File.join(@src_dir, "test.md"))
+      content = @page_builder.send(:markdown_to_html, File.read(File.join(@src_dir, "test.md")))
       assert_equal "<h1>Test Markdown</h1>\n", content
     end
 
     def test_erb_to_html
-      content = @page_builder.send(:erb_to_html, File.join(@src_dir, "test.erb"))
+      content = @page_builder.send(:erb_to_html, File.read(File.join(@src_dir, "test.erb")))
       assert_equal "<h1>Test ERB</h1>\n", content
     end
     # You can add more tests for each method and edge cases
