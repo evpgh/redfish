@@ -8,4 +8,5 @@
 /tmp/
 /src/
 /dist/
-Gemfile.lock
+/Gemfile.lock
+/*.gem

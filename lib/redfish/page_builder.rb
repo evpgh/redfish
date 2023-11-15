@@ -14,6 +14,7 @@ module Redfish
     def build_site
       Dir.glob(File.join(@src_dir, "**", "*")).each do |file|
         next if File.directory?(file)
+        next unless file.end_with?(".md", ".erb")
 
         content = process_file(file)
         write_output(file, content)
@@ -23,15 +24,13 @@ module Redfish
     private
 
     def process_file(file)
+      print "."
       case File.extname(file)
       when ".md"
         markdown_to_html(file)
       when ".erb"
         erb_to_html(file)
-      else
-        File.read(file)
       end
-      print "."
     end
 
     def markdown_to_html(file)
@@ -39,9 +38,8 @@ module Redfish
     end
 
     def erb_to_html(file)
-      # Here you can integrate your components system
-      template = File.read(file)
-      @renderer.render_erb(template, binding)
+      input = File.read(file)
+      @renderer.render_erb(input)
     end
 
     def write_output(file, content)

@@ -16,18 +16,8 @@ module Redfish
       markdown_to_html(File.read(markdown_file_path))
     end
 
-    def render_erb(template, binding)
-      ERB.new(template).result(binding)
-    end
-
-    def render_component(component_class, *args)
-      component = component_class.new(self, *args)
-      component.render
-    end
-
-    def component(component_class, *args)
-      component = component_class.new(self, *args)
-      component.render
+    def render_erb(input)
+      ERB.new(input).result(binding)
     end
   end
 end

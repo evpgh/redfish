@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name = "redfish"
   spec.version = Redfish::VERSION
   spec.authors = ["Evgeni Pavlov"]
-  spec.email = ["evgeni.pavlov@toptal.com"]
+  spec.email = ["evgeni@hey.com"]
 
   spec.summary = "Static site generator"
   spec.description = "Simple static site generator inspired by Jekyll"
@@ -27,12 +27,13 @@ Gem::Specification.new do |spec|
       (f == __FILE__) || f.match(%r{\A(?:(?:bin|test|spec|features)/|\.(?:git|circleci)|appveyor)})
     end
   end
-  spec.bindir = "exe"
-  spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+  spec.bindir = "bin"
+  spec.executables << 'rf'
   spec.require_paths = ["lib"]
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
+  spec.add_dependency "erb"
   spec.add_dependency "redcarpet"
 
   # For more information and examples about making a new gem, check out our

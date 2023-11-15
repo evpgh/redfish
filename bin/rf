@@ -8,8 +8,9 @@ options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: rf [options]"
 
-  opts.on("-n", "--new", "Create new site") do
-    options[:command] = :build
+  opts.on("-n", "--new PROJECT_NAME", "Create new site") do |project_name|
+    options[:command] = :new
+    options[:project_name] = project_name
   end
 
   opts.on("-b", "--build", "Build the site") do
@@ -20,6 +21,11 @@ OptionParser.new do |opts|
     options[:command] = :watch
   end
 
+  opts.on("-c", "--new-component COMPONENT_NAME", "Create new site") do |component_name|
+    options[:command] = :generate_component
+    options[:component_name] = component_name
+  end
+
   opts.on("-h", "--help", "Prints this help") do
     puts opts
     exit
@@ -28,11 +34,15 @@ end.parse!
 
 case options[:command]
 when :new
-  Redfish::NewProjectGenerator.new.generate
+  project_name = options[:project_name]
+  Redfish::Generate::Project.new(project_name).generate
 when :build
   Redfish.build
 when :watch
   Redfish.watch { Redfish::PageBuilder.new.build_site }
+when :generate_component
+  component_name = options[:component_name]
+  Redfish::Generate::Component.new(component_name).generate
 else
   puts "Invalid command. Use --help for usage information."
 end

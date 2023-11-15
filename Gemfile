@@ -17,3 +17,6 @@ gem "listen"
 gem "optparse"
 gem "redcarpet"
 gem "zeitwerk"
+
+# need binding.pry
+gem "pry"

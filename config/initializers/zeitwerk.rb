@@ -4,5 +4,6 @@ require "zeitwerk"
 
 loader = Zeitwerk::Loader.new
 loader.push_dir(File.join(__dir__, "..", "..", "lib"))
-loader.push_dir(File.join(__dir__, "..", "..", "test"))
+loader.push_dir(File.join(Dir.pwd, "src")) if Dir.exist?(File.join(__dir__, "src"))
+loader.push_dir(File.join(__dir__, "..", "..", "test")) if Dir.exist?(File.join(__dir__, "..", "..", "test"))
 loader.setup
