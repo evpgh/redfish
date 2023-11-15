@@ -15,3 +15,4 @@ module Components
       assert_equal "<p class=\"w3-container w3-padding-16\">Hello World</p>", component.render
     end
   end
+end
