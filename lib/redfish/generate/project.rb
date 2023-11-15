@@ -27,7 +27,7 @@ module Redfish
         base_dir = "#{Dir.pwd}/#{@name}"
 
         # Create a default index page
-        File.write(File.join(base_dir, 'src/pages/index.erb'), "<p>Welcome to Redfish!</p>")
+        File.write(File.join(base_dir, 'src/pages/index.erb'), "<%= text content: Welcome to Redfish! %>")
 
         # Create a sample blog post
         File.write(File.join(base_dir, 'src/pages/blog/2023-01-01-hello-world.md'), "# Hello World\nThis is my first blog post using Redfish.")

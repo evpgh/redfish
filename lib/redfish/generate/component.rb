@@ -40,7 +40,7 @@ module Redfish
       end
 
       def create_test_file(class_name, filename)
-        test_path = "#{TEST_DIR}/#{filename}_test.rb"
+        test_path = "#{TEST_DIR}/test_#{filename}.rb"
         test_content = <<-RUBY
   require 'minitest/autorun'
   require_relative '../src/components/#{filename}'
@@ -61,11 +61,13 @@ module Redfish
         component_path = "#{SRC_DIR}/#{filename}.rb"
         component_content = <<-RUBY
   module Redfish
-    class #{class_name} < Component
-      def self.template
-        <<~ERB
-          <!-- Default HTML structure for #{class_name} -->
-        ERB
+    module Components
+      class #{class_name} < Redfish::Component
+        def self.template
+          <<~ERB
+            <!-- Default HTML structure for #{class_name} -->
+          ERB
+        end
       end
     end
   end
