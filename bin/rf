@@ -21,7 +21,7 @@ OptionParser.new do |opts|
     options[:command] = :watch
   end
 
-  opts.on("-c", "--new-component COMPONENT_NAME", "Create new site") do |component_name|
+  opts.on("-c", "--new-component COMPONENT_NAME", "Create new component") do |component_name|
     options[:command] = :generate_component
     options[:component_name] = component_name
   end

@@ -6,20 +6,24 @@ require "pry"
 
 module Redfish
   class PageBuilder
-    def initialize(src_dir: "src", dest_dir: "dist", template: "template.html.erb")
+    def initialize(src_dir: "src", dest_dir: "dist", template: "src/templates/pages.erb")
       @src_dir = src_dir
       @dest_dir = dest_dir
       @template = template.is_a?(ERB) ? template : load_template(template)
     end
 
     def build_site
-      Dir.glob(File.join(@src_dir, "**", "*")).each do |file|
-        next if File.directory?(file)
-        next unless file.end_with?(".md", ".erb", ".html")
+      Dir.glob(File.join(@src_dir, "**", "*.{md,erb,html}")).each do |input|
+        next if input.include?("templates")
 
-        content = process_file(file)
-        write_output(file, content)
-        print "." # Progress indicator
+        dir_template = File.join('src/templates/', File.dirname(input), ".erb")
+        if File.exist?(dir_template)
+          @template = load_template(dir_template)
+        end
+
+        content = process_file(input)
+        write_output(input, content)
+        @template = load_template("#{@src_dir}/templates/pages.erb") # reset template
       end
     end
 
@@ -50,6 +54,7 @@ module Redfish
     def write_output(file, content)
       rel_path = file.sub(/^#{@src_dir}/, "")
       output_path = File.join(@dest_dir, rel_path)
+      output_path.sub!('pages/','home/')
       output_path.sub!(/\.(md|erb)$/, ".html")
 
       FileUtils.mkdir_p(File.dirname(output_path))

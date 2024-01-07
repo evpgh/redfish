@@ -7,12 +7,24 @@ require_relative "../test_helper"
 
 module Redfish
   class TestPageBuilder < Minitest::Test
-    def setup # rubocop:disable Metrics/MethodLength
+    def setup
       @src_dir = "test_src"
       @dest_dir = "test_dest"
+      create_dirs
+      create_template
+      File.write(File.join(@src_dir, "test_md.md"), "# Test Markdown")
+      File.write(File.join(@src_dir, "test_erb.erb"), "<h1>Test ERB</h1>")
+      @page_builder = Redfish::PageBuilder.new(src_dir: @src_dir, dest_dir: @dest_dir, template: @template_file)
+    end
+
+    def create_dirs
       FileUtils.mkdir_p(@src_dir)
+      FileUtils.mkdir_p("#{@src_dir}/templates")
       FileUtils.mkdir_p(@dest_dir)
-      @template_file = File.join(@src_dir, "template.html.erb")
+    end
+
+    def create_template # rubocop:disable Metrics/MethodLength
+      @template_file = File.join(@src_dir, "templates/pages.erb")
       @template_text = "<!DOCTYPE html>
 <html>
   <head>
@@ -23,11 +35,6 @@ module Redfish
   </body>
 </html>"
       File.write(@template_file, @template_text) unless File.exist?(@template_file)
-      FileUtils.mkdir_p(@src_dir)
-      FileUtils.mkdir_p(@dest_dir)
-      File.write(File.join(@src_dir, "test_md.md"), "# Test Markdown")
-      File.write(File.join(@src_dir, "test_erb.erb"), "<h1>Test ERB</h1>")
-      @page_builder = Redfish::PageBuilder.new(src_dir: @src_dir, dest_dir: @dest_dir, template: @template_file)
     end
 
     def teardown
@@ -66,7 +73,7 @@ module Redfish
     end
 
     def test_load_template
-      template = @page_builder.send(:load_template, "test_src/template.html.erb")
+      template = @page_builder.send(:load_template, "test_src/templates/pages.erb")
       content = "yielded content"
       expected_text = "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Redfish</title>\n  </head>\n  <body>\n    #{content}\n  </body>\n</html>" # rubocop:disable Metrics/LineLength
       assert_equal expected_text, template.result(binding)
