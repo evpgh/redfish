@@ -1,4 +1,6 @@
-require 'erb'
+# frozen_string_literal: true
+
+require "erb"
 
 module Redfish
   class Component

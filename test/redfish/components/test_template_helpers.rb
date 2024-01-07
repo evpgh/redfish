@@ -1,5 +1,7 @@
-require 'minitest/autorun'
-require_relative '../../../lib/redfish/components/template_helpers'
+# frozen_string_literal: true
+
+require "minitest/autorun"
+require_relative "../../../lib/redfish/components/template_helpers"
 
 class TemplateHelpersTest < Minitest::Test
   include Redfish::Components::TemplateHelpers
@@ -17,9 +19,10 @@ class TemplateHelpersTest < Minitest::Test
   end
 
   def test_navbar_helper
-    result = navbar(links: ["Home", "About", "Contact"])
+    result = navbar(links: %w[Home About Contact])
     # Assuming the render method of Navbar component returns an HTML navbar
-    assert_equal "<nav class=\"w3-bar w3-border\"><a class=\"w3-bar-item w3-button\" href=\"\">Home</a><a class=\"w3-bar-item w3-button\" href=\"\">About</a><a class=\"w3-bar-item w3-button\" href=\"\">Contact</a></nav>", result
+    assert_equal "<nav class=\"w3-bar w3-border\"><a class=\"w3-bar-item w3-button\" href=\"\">Home</a><a class=\"w3-bar-item w3-button\" href=\"\">About</a><a class=\"w3-bar-item w3-button\" href=\"\">Contact</a></nav>", # rubocop:disable Metrics/LineLength
+                 result
   end
 
   # Additional tests for other options and edge cases...

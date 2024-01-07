@@ -1,11 +1,13 @@
-require 'fileutils'
-require 'zeitwerk'
+# frozen_string_literal: true
+
+require "fileutils"
+require "zeitwerk"
 
 module Redfish
   module Generate
     class Component
-      SRC_DIR = 'src/components'
-      TEST_DIR = 'test/components'
+      SRC_DIR = "src/components"
+      TEST_DIR = "test/components"
 
       def initialize(component_name)
         @component_name = component_name
@@ -22,12 +24,12 @@ module Redfish
       private
 
       def camelize(str)
-        str.split('_').map(&:capitalize).join
+        str.split("_").map(&:capitalize).join
       end
-  
+
       # Converts a string to snake_case
       def underscore(str)
-        str.gsub(/::/, '/')
+        str.gsub("::", "/")
            .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
            .gsub(/([a-z\d])([A-Z])/, '\1_\2')
            .tr("-", "_")
@@ -35,8 +37,8 @@ module Redfish
       end
 
       def create_directories
-        FileUtils.mkdir_p("#{SRC_DIR}")
-        FileUtils.mkdir_p("#{TEST_DIR}")
+        FileUtils.mkdir_p(SRC_DIR.to_s)
+        FileUtils.mkdir_p(TEST_DIR.to_s)
       end
 
       def create_test_file(class_name, filename)
