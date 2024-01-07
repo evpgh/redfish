@@ -43,7 +43,7 @@ module Redfish
       end
 
       def template_text
-"<!DOCTYPE html>
+        "<!DOCTYPE html>
 <html>
   <head>
     <title>Redfish</title>
