@@ -20,6 +20,58 @@ Or install it yourself as:
 $ gem install redfish
 ```
 
+## Usage
+
+The `rf` command line tool provides several options for managing your Redfish site:
+
+### Create a New Site
+
+To create a new site, use the `-n` or `--new` option followed by the name of your project:
+
+```bash
+rf --new PROJECT_NAME
+```
+
+This will generate a new Redfish project with the specified name.
+
+### Build the Site
+
+To build your site, use the `-b` or `--build` option:
+
+```bash
+rf --build
+```
+
+This will build your site and place the output in the `build` directory.
+
+### Watch for Changes
+
+To watch for changes and automatically rebuild your site when a change is detected, use the `-w` or `--watch` option:
+
+```bash
+rf --watch
+```
+
+### Create a New Component
+
+To create a new component, use the `-c` or `--new-component` option followed by the name of your component:
+
+```bash
+rf --new-component COMPONENT_NAME
+```
+
+This will generate a new component with the specified name.
+
+### Help
+
+To print usage information, use the `-h` or `--help` option:
+
+```bash
+rf --help
+```
+
+This will print a help message with information about all available options.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
