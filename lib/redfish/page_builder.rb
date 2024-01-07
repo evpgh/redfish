@@ -2,12 +2,14 @@
 
 require "fileutils"
 require "erb"
+require "pry"
 
 module Redfish
   class PageBuilder
-    def initialize(src_dir: "src", dest_dir: "dist")
+    def initialize(src_dir: "src", dest_dir: "dist", template: "template.html.erb")
       @src_dir = src_dir
       @dest_dir = dest_dir
+      @template = template.is_a?(ERB) ? template : load_template(template)
     end
 
     def build_site
@@ -17,6 +19,7 @@ module Redfish
 
         content = process_file(file)
         write_output(file, content)
+        print "." # Progress indicator
       end
     end
 
@@ -24,7 +27,6 @@ module Redfish
 
     def process_file(file)
       input = File.read(file)
-      print "."
       case File.extname(file)
       when ".md"
         markdown_to_html(input)
@@ -35,14 +37,14 @@ module Redfish
       end
     end
 
-    def markdown_to_html(file)
-      @markdown_renderer ||= Renderers::Markdown.new
-      @markdown_renderer.render(file)
+    def markdown_to_html(input)
+      @markdown_renderer ||= Renderers::Markdown.new(@template)
+      @markdown_renderer.render(input)
     end
 
-    def erb_to_html(file)
-      @erb_renderer ||= Renderers::Erb.new
-      @erb_renderer.render(file)
+    def erb_to_html(input)
+      @erb_renderer ||= Renderers::Erb.new(@template)
+      @erb_renderer.render(input)
     end
 
     def write_output(file, content)
@@ -52,6 +54,10 @@ module Redfish
 
       FileUtils.mkdir_p(File.dirname(output_path))
       File.write(output_path, content)
+    end
+
+    def load_template(file)
+      ERB.new(File.read(file))
     end
   end
 end

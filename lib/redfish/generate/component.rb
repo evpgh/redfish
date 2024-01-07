@@ -41,25 +41,18 @@ module Redfish
 
       def create_test_file(class_name, filename)
         test_path = "#{TEST_DIR}/test_#{filename}.rb"
-        test_content = <<-RUBY
-  require 'minitest/autorun'
-  require_relative '../src/components/#{filename}'
-
-  class #{class_name}Test < Minitest::Test
-    def test_render_default
-      component = Redfish::#{class_name}.new
-      assert_equal "<!-- Expected output -->", component.render.strip
-    end
-  end
-        RUBY
-
         File.write(test_path, test_content)
         puts "#{class_name} component test generated successfully."
       end
 
       def create_component_file(class_name, filename)
         component_path = "#{SRC_DIR}/#{filename}.rb"
-        component_content = <<-RUBY
+        File.write(component_path, component_content)
+        puts "#{class_name} component generated successfully."
+      end
+
+      def component_content
+        <<-RUBY
   module Redfish
     module Components
       class #{class_name} < Redfish::Component
@@ -72,8 +65,20 @@ module Redfish
     end
   end
         RUBY
-        File.write(component_path, component_content)
-        puts "#{class_name} component generated successfully."
+      end
+
+      def test_content
+        <<-RUBY
+  require 'minitest/autorun'
+  require_relative '../src/components/#{filename}'
+
+  class #{class_name}Test < Minitest::Test
+    def test_render_default
+      component = Redfish::#{class_name}.new
+      assert_equal "<!-- Expected output -->", component.render.strip
+    end
+  end
+        RUBY
       end
     end
   end

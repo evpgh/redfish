@@ -8,7 +8,8 @@ module Redfish
       end
 
       def render(input)
-        renderer.render(input)
+        content = renderer.render(input)
+        @template.result(binding)
       end
     end
   end
