@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require "minitest/autorun"
-require "fileutils"
-require_relative "../../lib/redfish/page_builder"
-require_relative "../test_helper"
+require "test_helper"
+require "erb"
 
 module Redfish
   class TestPageBuilder < Minitest::Test

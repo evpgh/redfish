@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require "fileutils"
 require "erb"
-require "pry"
+require "fileutils"
 
 module Redfish
   class PageBuilder

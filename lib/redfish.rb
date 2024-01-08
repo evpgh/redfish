@@ -2,7 +2,6 @@
 
 require_relative "../config/initializers/zeitwerk"
 require_relative "redfish/version"
-
 module Redfish
   class Error < StandardError; end
 

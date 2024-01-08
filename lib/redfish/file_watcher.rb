@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "listen"
-
 module Redfish
   class FileWatcher
     def initialize(rebuild_method)
